@@ -14,6 +14,19 @@ export class AppAuthService {
   private useraliasSubject: BehaviorSubject<string> = new BehaviorSubject('');
   public readonly useraliasObservable: Observable<string> =
     this.useraliasSubject.asObservable();
+  private emailSubject: BehaviorSubject<string> = new BehaviorSubject('');
+  public readonly emailObservable: Observable<string> =
+    this.emailSubject.asObservable();
+  private givenNameSubject: BehaviorSubject<string> = new BehaviorSubject('');
+  public readonly givenNameObservable: Observable<string> =
+    this.givenNameSubject.asObservable();
+  private familyNameSubject: BehaviorSubject<string> = new BehaviorSubject('');
+  public readonly familyNameObservable: Observable<string> =
+    this.familyNameSubject.asObservable();
+  private preferredUsernameSubject: BehaviorSubject<string> =
+    new BehaviorSubject('');
+  public readonly preferredUsernameObservable: Observable<string> =
+    this.preferredUsernameSubject.asObservable();
   private accessTokenSubject: BehaviorSubject<string> = new BehaviorSubject('');
   public readonly accessTokenObservable: Observable<string> =
     this.accessTokenSubject.asObservable();
@@ -82,6 +95,10 @@ export class AppAuthService {
     this.oauthService.logOut();
     this.useraliasSubject.next('');
     this.usernameSubject.next('');
+    this.emailSubject.next('');
+    this.givenNameSubject.next('');
+    this.familyNameSubject.next('');
+    this.preferredUsernameSubject.next('');
   }
 
   public login() {
@@ -96,15 +113,29 @@ export class AppAuthService {
       this.accessTokenSubject.next(this._accessToken);
       this._decodedAccessToken = this.jwtHelper.decodeToken(this._accessToken);
 
-      if (
-        this._decodedAccessToken?.family_name &&
-        this._decodedAccessToken?.given_name
-      ) {
-        const username =
-          this._decodedAccessToken?.given_name +
-          ' ' +
-          this._decodedAccessToken?.family_name;
-        this.usernameSubject.next(username);
+      // Extrahieren der Daten aus dem JWT-Token
+      if (this._decodedAccessToken) {
+        // Vorname und Nachname
+        if (
+          this._decodedAccessToken?.given_name &&
+          this._decodedAccessToken?.family_name
+        ) {
+          const username =
+            this._decodedAccessToken?.given_name +
+            ' ' +
+            this._decodedAccessToken?.family_name;
+          this.usernameSubject.next(username);
+        }
+
+        // Vorname, Nachname, E-Mail und bevorzugter Benutzername
+        this.givenNameSubject.next(this._decodedAccessToken?.given_name || '');
+        this.familyNameSubject.next(
+          this._decodedAccessToken?.family_name || ''
+        );
+        this.emailSubject.next(this._decodedAccessToken?.email || '');
+        this.preferredUsernameSubject.next(
+          this._decodedAccessToken?.preferred_username || ''
+        );
       }
 
       const claims = this.getIdentityClaims();

@@ -1,4 +1,23 @@
 <main>
-  <p>Hey there! Welcome to the homepage of the Podcastmanager app!</p>
-  <p>This website was created by me, Lorenz Boss!</p>
+  <p>
+    Hey <strong>{{ preferredUsername }}</strong
+    >, welcome to the Podcastmanager!
+  </p>
+  <p>
+    This website was created by
+    <a href="https://github.com/lorenzboss">Lorenz Boss</a> and
+    <a href="https://github.com/leandroaebi">Leandro Aebi</a>!
+  </p>
+
+  <div *ngIf="preferredUsername">
+    <h3>User Information</h3>
+    <p><strong>Username:</strong> {{ preferredUsername }}</p>
+    <p><strong>First Name:</strong> {{ givenName }}</p>
+    <p><strong>Last Name:</strong> {{ familyName }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+  </div>
+
+  <div *ngIf="!preferredUsername">
+    <p><strong>Please log in to view your user information.</strong></p>
+  </div>
 </main>
