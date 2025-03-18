@@ -4,14 +4,14 @@ import { Topic } from './topic';
 export class Podcast {
   id!: number;
   title!: string;
-  description!: string;
+  description?: string;
   artists!: Artist[];
   topics!: Topic[];
 }
 
 export class CreatePodcast {
   title!: string;
-  description!: string;
+  description?: string;
   artists!: CreatePodcastArtist[];
   topics!: CreatePodcastTopic[];
 }
@@ -19,7 +19,7 @@ export class CreatePodcast {
 export class UpdatePodcast {
   id!: number;
   title!: string;
-  description!: string;
+  description?: string;
   artists!: CreatePodcastArtist[];
   topics!: CreatePodcastTopic[];
 }

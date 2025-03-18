@@ -22,8 +22,8 @@ export class EditPodcastDialogComponent implements OnInit {
   podcastForm = this.fb.group({
     title: ['', Validators.required],
     description: [''],
-    artists: ['', Validators.required],
-    topics: ['', Validators.required],
+    artists: [<number[]>[], Validators.required],
+    topics: [<number[]>[], Validators.required],
   });
 
   artists: Artist[] = [];
@@ -45,6 +45,8 @@ export class EditPodcastDialogComponent implements OnInit {
     this.podcastForm.patchValue({
       title: this.data.title,
       description: this.data.description,
+      artists: this.data.artists.map((artist) => artist.id), // IDs extrahieren
+      topics: this.data.topics.map((topic) => topic.id), // IDs extrahieren
     });
   }
 
@@ -63,7 +65,6 @@ export class EditPodcastDialogComponent implements OnInit {
   onSubmit() {
     if (
       this.podcastForm.valid &&
-      this.podcastForm.value.description &&
       this.podcastForm.value.title &&
       this.podcastForm.value.artists &&
       this.podcastForm.value.topics
@@ -82,7 +83,7 @@ export class EditPodcastDialogComponent implements OnInit {
       const podcast: UpdatePodcast = {
         id: this.data.id,
         title: this.podcastForm.value.title as string,
-        description: this.podcastForm.value.description as string,
+        description: this.podcastForm.value.description || '',
         artists: artists,
         topics: topics,
       };
