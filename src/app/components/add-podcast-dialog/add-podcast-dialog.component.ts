@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { PodcastsService } from '../../service/podcasts.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Artist } from '../../data/artist';
 import {
   CreatePodcast,
   CreatePodcastArtist,
   CreatePodcastTopic,
 } from '../../data/podcast';
-import { Artist } from '../../data/artist';
-import { ArtistsService } from '../../service/artists.service';
 import { Topic } from '../../data/topic';
+import { ArtistsService } from '../../service/artists.service';
+import { PodcastsService } from '../../service/podcasts.service';
 import { TopicsService } from '../../service/topics.service';
 
 @Component({
@@ -20,7 +20,7 @@ import { TopicsService } from '../../service/topics.service';
 export class AddPodcastDialogComponent {
   podcastForm = this.fb.group({
     title: ['', Validators.required],
-    description: ['', Validators.required],
+    description: [''],
     artists: ['', Validators.required],
     topics: ['', Validators.required],
   });
