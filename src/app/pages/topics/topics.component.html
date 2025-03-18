@@ -1,0 +1,49 @@
+<main>
+  <div>
+    <mat-toolbar *appIsInRole="'user'" color="primary">
+      <span>
+        <button
+          *appIsInRole="'user'"
+          color="primary"
+          mat-button
+          style="color: white"
+          (click)="openAddTopicDialog()"
+        >
+          <mat-icon>add</mat-icon>
+          Add new topic!
+        </button>
+      </span>
+    </mat-toolbar>
+  </div>
+  <table mat-table [dataSource]="topics" class="mat-elevation-z8">
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>description</th>
+      <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th *matHeaderCellDef mat-header-cell></th>
+      <td *matCellDef="let element" mat-cell style="text-align: end">
+        <button
+          *appIsInRole="'user'"
+          (click)="openEditTopicDialog(element)"
+          color="primary"
+          mat-button
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          *appIsInRole="'user'"
+          (click)="openDeleteTopicDialog(element)"
+          color="warn"
+          mat-button
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</main>

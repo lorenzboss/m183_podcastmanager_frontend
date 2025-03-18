@@ -1,0 +1,68 @@
+<mat-toolbar>
+  <div class="header">
+    <h1>
+      Podcastmanager - <span> {{ currentPage }}</span>
+    </h1>
+
+    <div class="nav">
+      <button
+        *ngIf="oauthService.hasValidAccessToken()"
+        mat-raised-button
+        [routerLink]="['']"
+        color="primary"
+      >
+        Home
+      </button>
+
+      <button
+        *ngIf="oauthService.hasValidAccessToken()"
+        mat-raised-button
+        [routerLink]="['artists']"
+        color="primary"
+      >
+        Artists
+      </button>
+
+      <button
+        *ngIf="oauthService.hasValidAccessToken()"
+        mat-raised-button
+        [routerLink]="['topics']"
+        color="primary"
+      >
+        Topics
+      </button>
+
+      <button
+        *ngIf="oauthService.hasValidAccessToken()"
+        mat-raised-button
+        [routerLink]="['podcasts']"
+        color="primary"
+      >
+        Podcasts
+      </button>
+
+      <div>
+        <button
+          *ngIf="!oauthService.hasValidAccessToken()"
+          mat-raised-button
+          class="loginButton"
+          color="primary"
+          style="background-color: #09821b"
+          (click)="login()"
+        >
+          Login
+        </button>
+
+        <button
+          *ngIf="oauthService.hasValidAccessToken()"
+          mat-raised-button
+          class="logoutButton"
+          color="warn"
+          (click)="logout()"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

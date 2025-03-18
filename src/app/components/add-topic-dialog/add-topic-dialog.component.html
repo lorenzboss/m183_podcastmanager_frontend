@@ -1,0 +1,38 @@
+<mat-dialog-content>
+  <form [formGroup]="topicForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      <mat-form-field class="form-field">
+        <mat-label>description</mat-label>
+        <input
+          matInput
+          formControlName="description"
+          minlength="3"
+          maxlength="30"
+          #description
+        />
+        <mat-hint align="end">
+          {{ description.value.length }}/{{ description.maxLength }}
+        </mat-hint>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!topicForm.valid"
+          type="submit"
+        >
+          Add Topic
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>

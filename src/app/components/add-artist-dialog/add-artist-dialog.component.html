@@ -1,0 +1,52 @@
+<mat-dialog-content>
+  <form [formGroup]="artistForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      <mat-form-field class="form-field">
+        <mat-label>firstname</mat-label>
+        <input
+          matInput
+          formControlName="firstname"
+          minlength="2"
+          maxlength="20"
+          #firstname
+        />
+        <mat-hint align="end">
+          {{ firstname.value.length }}/{{ firstname.maxLength }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>lastname</mat-label>
+        <input
+          matInput
+          formControlName="lastname"
+          minlength="2"
+          maxlength="20"
+          #lastname
+        />
+        <mat-hint align="end">
+          {{ lastname.value.length }}/{{ lastname.maxLength }}
+        </mat-hint>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!artistForm.valid"
+          type="submit"
+        >
+          Add Artist
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>

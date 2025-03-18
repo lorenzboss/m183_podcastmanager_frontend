@@ -1,0 +1,54 @@
+<main>
+  <div>
+    <mat-toolbar *appIsInRole="'staff'" color="primary">
+      <span>
+        <button
+          *appIsInRole="'staff'"
+          color="primary"
+          mat-button
+          style="color: white"
+          (click)="openAddArtistDialog()"
+        >
+          <mat-icon>add</mat-icon>
+          Add new artist!
+        </button>
+      </span>
+    </mat-toolbar>
+  </div>
+  <table mat-table [dataSource]="artists" class="mat-elevation-z8">
+    <ng-container matColumnDef="firstname">
+      <th mat-header-cell *matHeaderCellDef>firstname</th>
+      <td mat-cell *matCellDef="let element">{{ element.firstname }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef>lastname</th>
+      <td mat-cell *matCellDef="let element">{{ element.lastname }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th *matHeaderCellDef mat-header-cell></th>
+      <td *matCellDef="let element" mat-cell style="text-align: end">
+        <button
+          *appIsInRole="'staff'"
+          (click)="openEditArtistDialog(element)"
+          color="primary"
+          mat-button
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          *appIsInRole="'admin'"
+          (click)="openDeleteArtistDialog(element)"
+          color="warn"
+          mat-button
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</main>

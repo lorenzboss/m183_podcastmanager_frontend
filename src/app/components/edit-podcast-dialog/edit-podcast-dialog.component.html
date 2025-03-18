@@ -1,0 +1,77 @@
+<mat-dialog-content>
+  <form [formGroup]="podcastForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      <mat-form-field class="form-field">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          required
+          formControlName="title"
+          minlength="2"
+          maxlength="100"
+          #title
+        />
+        <mat-hint align="end">
+          {{ title.value.length }}/{{ title.maxLength }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          required
+          formControlName="description"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          minlength="5"
+          maxlength="250"
+          #description
+        ></textarea>
+
+        <mat-hint align="end">
+          {{ description.value.length }}/{{ description.maxLength }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Artists</mat-label>
+        <mat-select formControlName="artists" multiple>
+          <mat-option *ngFor="let artist of artists" [value]="artist.id">
+            {{ artist.firstname }} {{ artist.lastname }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Topics</mat-label>
+        <mat-select formControlName="topics" multiple>
+          <mat-option *ngFor="let topic of topics" [value]="topic.id">
+            {{ topic.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!podcastForm.valid"
+          type="submit"
+        >
+          Add Podcast
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
