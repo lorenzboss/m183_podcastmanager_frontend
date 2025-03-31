@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddTopicDialogComponent } from '../../components/add-topic-dialog/add-topic-dialog.component';
 import {
   DeleteDialogComponent,
   DeleteDialogData,
 } from '../../components/delete-dialog/delete-dialog.component';
-import { EditTopicDialogComponent } from '../../components/edit-topic-dialog/edit-topic-dialog.component';
+import { TopicDialogComponent } from '../../components/topic-dialog/topic-dialog.component';
 import { Topic } from '../../data/topic';
 import { TopicsService } from '../../service/topics.service';
 
@@ -28,20 +27,26 @@ export class TopicsComponent {
   }
 
   openAddTopicDialog() {
-    const dialogRef = this.dialog.open(AddTopicDialogComponent);
+    const dialogRef = this.dialog.open(TopicDialogComponent, {
+      data: null, // Pass null for add mode
+    });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getTopics();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getTopics();
+      }
     });
   }
 
   openEditTopicDialog(topic: Topic) {
-    const dialogRef = this.dialog.open(EditTopicDialogComponent, {
-      data: topic,
+    const dialogRef = this.dialog.open(TopicDialogComponent, {
+      data: topic, // Pass topic object for edit mode
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getTopics();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getTopics();
+      }
     });
   }
 

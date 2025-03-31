@@ -1,8 +1,9 @@
 <mat-dialog-content>
+  <h2 mat-dialog-title>{{ dialogTitle }}</h2>
   <form [formGroup]="topicForm" (ngSubmit)="onSubmit()">
     <div class="form-container">
       <mat-form-field class="form-field">
-        <mat-label>description</mat-label>
+        <mat-label>Description</mat-label>
         <input
           matInput
           formControlName="description"
@@ -22,7 +23,7 @@
           [disabled]="!topicForm.valid"
           type="submit"
         >
-          Edit Topic
+          {{ submitButtonText }}
         </button>
         <button
           mat-raised-button
