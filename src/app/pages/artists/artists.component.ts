@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { ArtistsService } from '../../service/artists.service';
-import { Artist } from '../../data/artist';
 import { MatDialog } from '@angular/material/dialog';
 import { AddArtistDialogComponent } from '../../components/add-artist-dialog/add-artist-dialog.component';
+import {
+  DeleteDialogComponent,
+  DeleteDialogData,
+} from '../../components/delete-dialog/delete-dialog.component';
 import { EditArtistDialogComponent } from '../../components/edit-artist-dialog/edit-artist-dialog.component';
-import { DeleteArtistDialogComponent } from '../../components/delete-artist-dialog/delete-artist-dialog.component';
+import { Artist } from '../../data/artist';
+import { ArtistsService } from '../../service/artists.service';
 
 @Component({
   selector: 'app-artists',
@@ -46,12 +49,20 @@ export class ArtistsComponent {
   }
 
   openDeleteArtistDialog(artist: Artist) {
-    const dialogRef = this.dialog.open(DeleteArtistDialogComponent, {
-      data: artist,
+    const dialogData: DeleteDialogData<Artist> = {
+      item: artist,
+      itemType: 'Artist',
+      deleteFunction: (item: Artist) => this.artistsService.deleteArtist(item),
+    };
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent<Artist>, {
+      data: dialogData,
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getArtists();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getArtists();
+      }
     });
   }
 }

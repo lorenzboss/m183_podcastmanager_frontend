@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { PodcastsService } from '../../service/podcasts.service';
-import { Podcast } from '../../data/podcast';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPodcastDialogComponent } from '../../components/add-podcast-dialog/add-podcast-dialog.component';
+import {
+  DeleteDialogComponent,
+  DeleteDialogData,
+} from '../../components/delete-dialog/delete-dialog.component';
 import { EditPodcastDialogComponent } from '../../components/edit-podcast-dialog/edit-podcast-dialog.component';
-import { DeletePodcastDialogComponent } from '../../components/delete-podcast-dialog/delete-podcast-dialog.component';
+import { Podcast } from '../../data/podcast';
+import { PodcastsService } from '../../service/podcasts.service';
 
 @Component({
   selector: 'app-podcasts',
@@ -52,12 +55,21 @@ export class PodcastsComponent {
   }
 
   openDeletePodcastDialog(podcast: Podcast) {
-    const dialogRef = this.dialog.open(DeletePodcastDialogComponent, {
-      data: podcast,
+    const dialogData: DeleteDialogData<Podcast> = {
+      item: podcast,
+      itemType: 'Podcast',
+      deleteFunction: (item: Podcast) =>
+        this.podcastsService.deletePodcast(item),
+    };
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent<Podcast>, {
+      data: dialogData,
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getPodcasts();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getPodcasts();
+      }
     });
   }
 }
