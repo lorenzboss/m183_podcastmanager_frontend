@@ -11,7 +11,10 @@ import { TopicsService } from '../../service/topics.service';
 })
 export class TopicDialogComponent implements OnInit {
   topicForm = this.fb.group({
-    description: ['', Validators.required],
+    description: [
+      '',
+      [Validators.required, Validators.pattern('^[A-Za-z0-9$&\\-_,.!?]+$')],
+    ],
   });
 
   isEditMode = false;

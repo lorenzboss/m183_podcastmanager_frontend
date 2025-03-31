@@ -11,8 +11,14 @@ import { ArtistsService } from '../../service/artists.service';
 })
 export class ArtistDialogComponent implements OnInit {
   artistForm = this.fb.group({
-    firstname: ['', Validators.required],
-    lastname: ['', Validators.required],
+    firstname: [
+      '',
+      [Validators.required, Validators.pattern('^[A-Za-z0-9$&\\-_,.!?]+$')],
+    ],
+    lastname: [
+      '',
+      [Validators.required, Validators.pattern('^[A-Za-z0-9$&\\-_,.!?]+$')],
+    ],
   });
 
   isEditMode = false;

@@ -21,7 +21,10 @@ import { TopicsService } from '../../service/topics.service';
 })
 export class PodcastDialogComponent implements OnInit {
   podcastForm = this.fb.group({
-    title: ['', Validators.required],
+    title: [
+      '',
+      [Validators.required, Validators.pattern('^[A-Za-z0-9$&\\-_,.!?]+$')],
+    ],
     description: [''],
     artists: [<number[]>[], Validators.required],
     topics: [<number[]>[], Validators.required],
