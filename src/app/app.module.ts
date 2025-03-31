@@ -20,10 +20,9 @@ import { AuthConfig, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { environment } from '../environments/environment.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AddArtistDialogComponent } from './components/add-artist-dialog/add-artist-dialog.component';
 import { AddTopicDialogComponent } from './components/add-topic-dialog/add-topic-dialog.component';
+import { ArtistDialogComponent } from './components/artist-dialog/artist-dialog.component';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
-import { EditArtistDialogComponent } from './components/edit-artist-dialog/edit-artist-dialog.component';
 import { EditTopicDialogComponent } from './components/edit-topic-dialog/edit-topic-dialog.component';
 import { HeaderComponent } from './components/header/header.component';
 import { PodcastDialogComponent } from './components/podcast-dialog/podcast-dialog.component';
@@ -65,14 +64,13 @@ export function storageFactory(): OAuthStorage {
     HomepageComponent,
     NoAccessComponent,
     ArtistsComponent,
-    AddArtistDialogComponent,
-    EditArtistDialogComponent,
     TopicsComponent,
     AddTopicDialogComponent,
     EditTopicDialogComponent,
     PodcastsComponent,
     DeleteDialogComponent,
     PodcastDialogComponent,
+    ArtistDialogComponent,
   ],
   imports: [
     BrowserModule,

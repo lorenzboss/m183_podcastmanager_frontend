@@ -1,8 +1,9 @@
 <mat-dialog-content>
+  <h2 mat-dialog-title>{{ dialogTitle }}</h2>
   <form [formGroup]="artistForm" (ngSubmit)="onSubmit()">
     <div class="form-container">
       <mat-form-field class="form-field">
-        <mat-label>firstname</mat-label>
+        <mat-label>Firstname</mat-label>
         <input
           matInput
           formControlName="firstname"
@@ -16,7 +17,7 @@
       </mat-form-field>
 
       <mat-form-field class="form-field">
-        <mat-label>lastname</mat-label>
+        <mat-label>Lastname</mat-label>
         <input
           matInput
           formControlName="lastname"
@@ -36,7 +37,7 @@
           [disabled]="!artistForm.valid"
           type="submit"
         >
-          Add Artist
+          {{ submitButtonText }}
         </button>
         <button
           mat-raised-button

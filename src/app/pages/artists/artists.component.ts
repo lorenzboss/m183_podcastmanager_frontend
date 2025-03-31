@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddArtistDialogComponent } from '../../components/add-artist-dialog/add-artist-dialog.component';
+import { ArtistDialogComponent } from '../../components/artist-dialog/artist-dialog.component';
 import {
   DeleteDialogComponent,
   DeleteDialogData,
 } from '../../components/delete-dialog/delete-dialog.component';
-import { EditArtistDialogComponent } from '../../components/edit-artist-dialog/edit-artist-dialog.component';
 import { Artist } from '../../data/artist';
 import { ArtistsService } from '../../service/artists.service';
 
@@ -31,20 +30,26 @@ export class ArtistsComponent {
   }
 
   openAddArtistDialog() {
-    const dialogRef = this.dialog.open(AddArtistDialogComponent);
+    const dialogRef = this.dialog.open(ArtistDialogComponent, {
+      data: null, // Pass null for add mode
+    });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getArtists();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getArtists();
+      }
     });
   }
 
   openEditArtistDialog(artist: Artist) {
-    const dialogRef = this.dialog.open(EditArtistDialogComponent, {
-      data: artist,
+    const dialogRef = this.dialog.open(ArtistDialogComponent, {
+      data: artist, // Pass artist object for edit mode
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getArtists();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getArtists();
+      }
     });
   }
 
