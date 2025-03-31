@@ -16,7 +16,6 @@ export class ArtistDialogComponent implements OnInit {
   });
 
   isEditMode = false;
-  dialogTitle = 'Add Artist';
   submitButtonText = 'Add Artist';
 
   constructor(
@@ -29,7 +28,6 @@ export class ArtistDialogComponent implements OnInit {
   ngOnInit() {
     if (this.data) {
       this.isEditMode = true;
-      this.dialogTitle = 'Edit Artist';
       this.submitButtonText = 'Edit Artist';
       this.artistForm.patchValue({
         firstname: this.data.firstname,

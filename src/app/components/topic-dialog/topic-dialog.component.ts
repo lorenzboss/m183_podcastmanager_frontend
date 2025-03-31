@@ -15,7 +15,6 @@ export class TopicDialogComponent implements OnInit {
   });
 
   isEditMode = false;
-  dialogTitle = 'Add Topic';
   submitButtonText = 'Add Topic';
 
   constructor(
@@ -28,7 +27,6 @@ export class TopicDialogComponent implements OnInit {
   ngOnInit() {
     if (this.data) {
       this.isEditMode = true;
-      this.dialogTitle = 'Edit Topic';
       this.submitButtonText = 'Edit Topic';
       this.topicForm.patchValue({
         description: this.data.description,
