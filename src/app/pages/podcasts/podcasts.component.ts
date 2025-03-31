@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddPodcastDialogComponent } from '../../components/add-podcast-dialog/add-podcast-dialog.component';
 import {
   DeleteDialogComponent,
   DeleteDialogData,
 } from '../../components/delete-dialog/delete-dialog.component';
-import { EditPodcastDialogComponent } from '../../components/edit-podcast-dialog/edit-podcast-dialog.component';
+import { PodcastDialogComponent } from '../../components/podcast-dialog/podcast-dialog.component';
 import { Podcast } from '../../data/podcast';
 import { PodcastsService } from '../../service/podcasts.service';
 
@@ -37,20 +36,26 @@ export class PodcastsComponent {
   }
 
   openAddPodcastDialog() {
-    const dialogRef = this.dialog.open(AddPodcastDialogComponent);
+    const dialogRef = this.dialog.open(PodcastDialogComponent, {
+      data: null, // Pass null for add mode
+    });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getPodcasts();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getPodcasts();
+      }
     });
   }
 
   openEditPodcastDialog(podcast: Podcast) {
-    const dialogRef = this.dialog.open(EditPodcastDialogComponent, {
-      data: podcast,
+    const dialogRef = this.dialog.open(PodcastDialogComponent, {
+      data: podcast, // Pass podcast object for edit mode
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getPodcasts();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getPodcasts();
+      }
     });
   }
 

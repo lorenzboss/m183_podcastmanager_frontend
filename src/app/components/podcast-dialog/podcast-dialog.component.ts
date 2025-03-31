@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Artist } from '../../data/artist';
 import {
+  CreatePodcast,
   CreatePodcastArtist,
   CreatePodcastTopic,
   Podcast,
@@ -14,11 +15,11 @@ import { PodcastsService } from '../../service/podcasts.service';
 import { TopicsService } from '../../service/topics.service';
 
 @Component({
-  selector: 'app-edit-podcast-dialog',
-  templateUrl: './edit-podcast-dialog.component.html',
-  styleUrl: './edit-podcast-dialog.component.scss',
+  selector: 'app-podcast-dialog',
+  templateUrl: './podcast-dialog.component.html',
+  styleUrl: './podcast-dialog.component.scss',
 })
-export class EditPodcastDialogComponent implements OnInit {
+export class PodcastDialogComponent implements OnInit {
   podcastForm = this.fb.group({
     title: ['', Validators.required],
     description: [''],
@@ -28,26 +29,32 @@ export class EditPodcastDialogComponent implements OnInit {
 
   artists: Artist[] = [];
   topics: Topic[] = [];
+  isEditMode = false;
+  submitButtonText = 'Add Podcast';
 
   constructor(
     private fb: FormBuilder,
     private podcastsService: PodcastsService,
-    private dialogRef: MatDialogRef<EditPodcastDialogComponent>,
+    private dialogRef: MatDialogRef<PodcastDialogComponent>,
     private artistsService: ArtistsService,
     private topicsService: TopicsService,
-    @Inject(MAT_DIALOG_DATA) public data: Podcast
+    @Inject(MAT_DIALOG_DATA) public data: Podcast | null
   ) {
     this.getArtists();
     this.getTopics();
   }
 
   ngOnInit() {
-    this.podcastForm.patchValue({
-      title: this.data.title,
-      description: this.data.description,
-      artists: this.data.artists.map((artist) => artist.id), // IDs extrahieren
-      topics: this.data.topics.map((topic) => topic.id), // IDs extrahieren
-    });
+    if (this.data) {
+      this.isEditMode = true;
+      this.submitButtonText = 'Edit Podcast';
+      this.podcastForm.patchValue({
+        title: this.data.title,
+        description: this.data.description,
+        artists: this.data.artists.map((artist) => artist.id),
+        topics: this.data.topics.map((topic) => topic.id),
+      });
+    }
   }
 
   getArtists() {
@@ -80,25 +87,42 @@ export class EditPodcastDialogComponent implements OnInit {
         return { id: id };
       });
 
-      const podcast: UpdatePodcast = {
-        id: this.data.id,
-        title: this.podcastForm.value.title as string,
-        description: this.podcastForm.value.description || '',
-        artists: artists,
-        topics: topics,
-      };
-      this.podcastsService.updatePodcast(podcast).subscribe({
-        next: () => {
-          this.dialogRef.close();
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
+      if (this.isEditMode && this.data) {
+        const podcast: UpdatePodcast = {
+          id: this.data.id,
+          title: this.podcastForm.value.title as string,
+          description: this.podcastForm.value.description || '',
+          artists: artists,
+          topics: topics,
+        };
+        this.podcastsService.updatePodcast(podcast).subscribe({
+          next: () => {
+            this.dialogRef.close(true);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        });
+      } else {
+        const podcast: CreatePodcast = {
+          title: this.podcastForm.value.title as string,
+          description: this.podcastForm.value.description || '',
+          artists: artists,
+          topics: topics,
+        };
+        this.podcastsService.savePodcast(podcast).subscribe({
+          next: () => {
+            this.dialogRef.close(true);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        });
+      }
     }
   }
 
   onCancel() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 }

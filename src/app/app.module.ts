@@ -21,13 +21,12 @@ import { environment } from '../environments/environment.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddArtistDialogComponent } from './components/add-artist-dialog/add-artist-dialog.component';
-import { AddPodcastDialogComponent } from './components/add-podcast-dialog/add-podcast-dialog.component';
 import { AddTopicDialogComponent } from './components/add-topic-dialog/add-topic-dialog.component';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 import { EditArtistDialogComponent } from './components/edit-artist-dialog/edit-artist-dialog.component';
-import { EditPodcastDialogComponent } from './components/edit-podcast-dialog/edit-podcast-dialog.component';
 import { EditTopicDialogComponent } from './components/edit-topic-dialog/edit-topic-dialog.component';
 import { HeaderComponent } from './components/header/header.component';
+import { PodcastDialogComponent } from './components/podcast-dialog/podcast-dialog.component';
 import { IsInRoleDirective } from './dir/is.in.role.dir';
 import { IsInRolesDirective } from './dir/is.in.roles.dir';
 import { HttpXSRFInterceptor } from './interceptor/http.csrf.interceptor';
@@ -72,9 +71,8 @@ export function storageFactory(): OAuthStorage {
     AddTopicDialogComponent,
     EditTopicDialogComponent,
     PodcastsComponent,
-    AddPodcastDialogComponent,
-    EditPodcastDialogComponent,
     DeleteDialogComponent,
+    PodcastDialogComponent,
   ],
   imports: [
     BrowserModule,
